@@ -1,19 +1,25 @@
 module NetSuite
   module Records
-    class Classification
+    class TaxGroup
       include Support::Fields
       include Support::RecordRefs
       include Support::Records
       include Support::Actions
       include Namespaces::ListAcct
 
-      actions :get, :get_list, :delete, :upsert, :search
+      actions :get, :get_list, :add, :initialize, :delete, :update, :upsert, :search
 
-      fields :name, :include_children, :is_inactive, :class_translation_list, :custom_field_list
+      fields :city, :county, :description, :include_children, :is_default, :is_inactive,
+             :item_id, :piggyback, :rate, :state, :subsidiary_list, :unitprice1, :unitprice2,
+             :zip
 
-      field :subsidiary_list, RecordRefList
+      record_refs :taxitem1, :taxitem2, :nexus_country, :tax_type
 
-      attr_reader   :internal_id
+      # TODO
+      # tax_item_list
+      # subsidiary_list
+
+      attr_reader :internal_id
       attr_accessor :external_id
 
       def initialize(attributes = {})

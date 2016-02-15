@@ -1,19 +1,24 @@
+# https://system.netsuite.com/help/helpcenter/en_US/srbrowser/Browser2015_1/schema/record/revrecschedule.html
+
 module NetSuite
   module Records
-    class Classification
+    class RevRecSchedule
       include Support::Fields
       include Support::RecordRefs
       include Support::Records
       include Support::Actions
       include Namespaces::ListAcct
 
-      actions :get, :get_list, :delete, :upsert, :search
+      actions :get, :get_list, :add, :update, :upsert, :delete, :search
 
-      fields :name, :include_children, :is_inactive, :class_translation_list, :custom_field_list
+      fields :initial_amount, :is_inactive, :name, :period_offset, :rev_rec_offset,
+             :amortization_period
 
-      field :subsidiary_list, RecordRefList
+      record_refs :amortization_type, :recog_interval_src, :recurrence_type
 
-      attr_reader   :internal_id
+      # recurrenceList	RevRecScheduleRecurrenceList	0..1
+
+      attr_reader :internal_id
       attr_accessor :external_id
 
       def initialize(attributes = {})
