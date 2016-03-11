@@ -1,7 +1,7 @@
-# https://system.netsuite.com/help/helpcenter/en_US/Output/Help/SuiteCloudCustomizationScriptingWebServices/SuiteTalkWebServices/add.html
+# https://system.netsuite.com/help/helpcenter/en_US/Output/Help/SuiteCloudCustomizationScriptingWebServices/SuiteTalkWebServices/attach.html
 module NetSuite
   module Actions
-    class Add
+    class Attach
       include Support::Requests
 
       attr_reader :response_hash
@@ -14,16 +14,16 @@ module NetSuite
 
       def request(credentials={})
         puts request_body.inspect
-        NetSuite::Configuration.connection({}, credentials).call(:add, :message => request_body)
+        NetSuite::Configuration.connection({}, credentials).call(:attach, :message => request_body)
       end
 
       # <soap:Body>
-      #   <platformMsgs:add>
+      #   <platformMsgs:attach>
       #     <platformMsgs:record xsi:type="listRel:Customer">
       #       <listRel:entityId>Shutter Fly</listRel:entityId>
       #       <listRel:companyName>Shutter Fly, Inc</listRel:companyName>
       #     </platformMsgs:record>
-      #   </platformMsgs:add>
+      #   </platformMsgs:attach>
       # </soap:Body>
 
       def request_body
@@ -60,7 +60,7 @@ module NetSuite
       end
 
       def response_hash
-        @response_hash ||= @response.to_hash[:add_response][:write_response]
+        @response_hash ||= @response.to_hash[:attach_response][:write_response]
       end
 
       def errors
@@ -73,8 +73,8 @@ module NetSuite
       end
 
       module Support
-        def add(credentials={})
-          response = NetSuite::Actions::Add.call([self], credentials)
+        def attach(credentials={})
+          response = NetSuite::Actions::attach.call([self], credentials)
 
           @errors = response.errors
 
